@@ -1,0 +1,78 @@
+\section{Fair Gambler's Ruin}
+\label{sec:fair}
+
+Let's examine the fair ($p = 0.5$) Gambler's Ruin
+problem described in Section \ref{sec:intro}.
+Recall that:
+\begin{itemize}
+  \item The gambler begins with a fortune of $S_0 = i$ dollars.
+  \item The gambler plays a series of games, and in each of these games he can either win a dollar with probability $p = 0.5$ or lose a dollar with probability $1-p=0.5$.  
+  \item The gambler's winnings in game $t$ are $X_t$.
+  \item The gamber's fortune after $n$ games is $S_n = S_0 + \sum\limits_{t = 1}^{n}X_{t}$.
+  \item The gambler will stop when he runs out of money ($S_N = 0$) or obtains $N$ dollars ($S_N = N$).
+\end{itemize}
+
+First, let's show that $\left\{S_n\right\}$ is a martingale:
+\begin{align}
+  \mathbb{E}[S_n] &= S_{n-1} + p + (1-p)\cdot(-1) \\
+  \mathbb{E}[S_n] &= S_{n-1} + 2p - 1 \\
+  \mathbb{E}[S_n] &= S_{n-1} 
+\end{align}
+So $\left\{S_n\right\}$ is a martingale.
+
+We would like to evaluate the probability that the gambler accumulates $N$ dollars 
+and does not go bankrupt ($p'$).  We can evaluate that probability as follows:
+\begin{align}
+  \mathbb{E}[S_n] &= p' \cdot N + (1-p') \cdot ( 0 ) \\
+  \mathbb{E}[S_n] &= p' \cdot N 
+\end{align}
+The fact that $\left\{S_n\right\}$ is a martingale allows
+us to evaluate this probability using the optional stopping theorem:
+\begin{align}
+  \mathbb{E}[S_n] &= \mathbb{E}[S_0] \\
+  \mathbb{E}[S_n] &= i 
+\end{align}
+Combining this information, we find:
+\begin{align}
+  \mathbb{E}[S_n] &= p' \cdot N = i \\
+  p' &= \frac{i}{N} 
+\end{align}
+This makes some intuitive sense.  The larger the gambler's initial 
+fortune ($i$), the less likely he is to go bankrupt.
+Similar, the larger his goal ($N$), the less likely he is to achieve it.
+
+We would also like to find the expected number of games ($\tau$) it will take the 
+gambler to either go bankrupt ($S_\tau = 0$) or reach his goal ($S_\tau = N$).
+To do this, we must prove that $\left\{S_n^2 - n\right\}$ is also a martingale:
+\begin{align}
+  \mathbb{E}[S_{n+1}^2 - (n+1)] &= \frac{1}{2}\left(S_n + 1\right)^2 + \frac{1}{2}\left(S_n - 1\right)^2 - (n+1) \\
+  \mathbb{E}[S_{n+1}^2 - (n+1)] &= \frac{1}{2}\left(2S_n^2 + 2\right) - (n+1) \\
+  \mathbb{E}[S_{n+1}^2 - (n+1)] &= S_n^2 - n 
+\end{align}
+So $\left\{S_n^2 - n\right\}$ is also a martingale.
+
+Since $\left\{S_n^2 - n\right\}$ is a martingale, we will treat $\tau$ as a stopping time.
+Let's evaluate the expectation value of $S_n^2 - n$ at the stopping time, $\tau$:
+\begin{align}
+  \mathbb{E}[S_\tau^2 - \tau] &= \mathbb{E}[S_\tau^2] - \mathbb{E}[\tau] \\
+  \mathbb{E}[S_\tau^2 - \tau] &= \mathbb{E}[p'\cdot \left(N^2\right) + (1-p')\cdot\left(0\right)] - \mathbb{E}[\tau] \\ 
+  \mathbb{E}[S_\tau^2 - \tau] &= p'\cdot \left(N^2\right) - \mathbb{E}[\tau]
+\end{align}
+We have already solved for $p'$, and we plug in the value we derived:
+\begin{align}
+  \mathbb{E}[S_\tau^2 - \tau] &= \left(\frac{i}{N}\right)\cdot \left(N^2\right) - \mathbb{E}[\tau] \\
+  \mathbb{E}[S_\tau^2 - \tau] &= iN - \mathbb{E}[\tau]
+\end{align}
+Furthermore, since $\left\{S_n^2 - n\right\}$ is a martingale, we can also make use of the optional stopping theorem:
+\begin{align}
+  \mathbb{E}[S_\tau^2 - \tau] &= \mathbb{E}[S_0^2 - 0] \\
+  \mathbb{E}[S_\tau^2 - \tau] &= i^2
+\end{align}
+Combining this information, we find:
+\begin{align}
+  \mathbb{E}[S_\tau^2 - \tau] & = iN - \mathbb{E}[\tau] = i^2 \\ 
+  \mathbb{E}[\tau] &= i\cdot(N - i) 
+\end{align}
+So the expected number of games the gambler would have to play to either win or lose
+is equal to the product of the number of dollars he would have to lose to go bankrupt ($i$)
+and the number of dollars he would have to win to reach his goal ($N-i$).

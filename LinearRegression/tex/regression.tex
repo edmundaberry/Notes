@@ -1,0 +1,73 @@
+\section{Regression}
+\label{sec:regression}
+
+There are many metrics to use to determine whether a given
+vector of coefficients, $\beta$ minimizes $\epsilon$.
+By far the most common is the sum of the difference
+of squares, $S$, which is defined as follows:
+\begin{equation}
+  S(\beta) = \sum_{i = 1}^{n}\left|y_{i} - \sum_{j = 1}^{k}X_{ij}\cdot \beta_{j}\right|^2
+\end{equation}
+Equivalently, in the vector representation:
+\begin{equation}
+  S(\beta) = \left|\left|y - X\beta\right|\right|^2
+\end{equation}
+
+One nice feature of the sum of the difference of squares
+is that the minimization problem has a unique solution, as
+long as the $k$ columns of matrix $X$ are linearly independent.
+This solution is derived below.
+
+We begin by redefining $S$ in terms of the residuals, $\epsilon$:
+\begin{equation}
+  S(\beta) = \sum_{i = 1}^{n}\epsilon_{i}^{2}
+\end{equation}
+Equivalently, in the vector representation:
+\begin{equation}
+  S(\beta) = \left|\left|\epsilon\right|\right|^2
+\end{equation}
+
+If we think of $\beta$ as a surface, then
+$S(\beta)$ is minimized when the gradient vector of $S(\beta)$ has magnitude
+zero.  There is a geometric argument for this:
+if the gradient is not zero, then there is a direction
+that we can move such that the gradient may be reduced.
+The gradient, $\nabla S(\beta)$, is a vector of length
+$k$, where each element of the vector is defined 
+as a partial derivative:
+\begin{equation}
+  \frac{\partial S}{\partial \beta_j} = 2 \sum_{i = 1}^{n} \epsilon_{i} \frac{\partial \epsilon_i}{\partial \beta_j}
+\end{equation}
+
+Recalling the definition of $\epsilon$ from Equation \ref{eqn:residual_definition},
+the partial derivate is easy to determine:
+\begin{equation}
+  \frac{\partial \epsilon_i}{\partial \beta_j} = -X_{ij}
+\end{equation}
+
+This allows us to completely determine each element of the 
+gradient of $S(\beta)$:
+\begin{align}
+  \frac{\partial S}{\partial \beta_j} &= -2 \sum_{i = 1}^{n} \epsilon_{i} \cdot X_{ij} \\
+  \frac{\partial S}{\partial \beta_j} &= -2 \sum_{i = 1}^{n} \left(y_i - \sum_{l = 1}^{k}X_{il}\cdot \beta_{l}\right) \cdot X_{ij}
+\end{align}
+
+We define $\hat{\beta}$ as the value of $\beta$ that minimizes $S(\beta)$ such
+that $\frac{\partial S}{\partial \beta_j} = 0$ for all $j$ between 1 and $k$:
+\begin{equation}
+  -2 \sum_{i = 1}^{n} \left(y_i - \sum_{l = 1}^{k}X_{ij}\cdot \hat{\beta}_{l}\right) \cdot X_{ij} = 0
+\end{equation}
+
+We can divide out a factor of 2 and rearrange this. For all $j$ between 1 and $k$:
+\begin{equation}
+  \sum_{i = 1}^{n} \sum_{l = 1}^{k} X_{ij}X_{il}\hat{\beta}_l = \sum_{i = 1}^{n}X_{ij} y_{i}
+\end{equation}
+Equivalently, in vector notation:
+\begin{equation}
+  \left(X^{T}X\right)\hat{\beta} = X^{T}y
+\end{equation}
+Solving for $\hat{\beta}$:
+\begin{equation}
+  \hat{\beta} = \left(X^{T}X\right)^{-1} X^{T}y
+\end{equation}
+

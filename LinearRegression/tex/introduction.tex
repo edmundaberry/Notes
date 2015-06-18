@@ -1,0 +1,61 @@
+\section{Introduction}
+\label{sec:intro}
+
+We begin by defining terms.
+
+Consider some variable you are trying to understand, $y$.
+You have a dataset that contains $n$ data points, and each data point,
+$i$ has its own value of $y$, $y_i$. You describe this collection
+of values for $y$ in a vector representation, as follows:
+\begin{equation}
+  y = \left<y_1, y_2, \cdots, y_n\right>
+\end{equation}
+
+You decide to try to predict the value of this variable as a linear combination
+of a series of $k$ predictor variables, $X$.  $X$ is best described as an $n \times k$ 
+matrix, where each of the $n$ rows corresponds to a single data point, and each
+of the $k$ columns corresponds to a single predictor variable.
+You can refer to a single row (i.e. a single data point with $k$ variables) as $X_i$.
+These rows can also be described in a vector representation, as follows:
+\begin{equation}
+  X_i = \left< X_{i1}, X_{i2}, \cdots, X_{ik} \right>
+\end{equation}
+
+A linear combination of $k$ predictor variables requires $k$
+coefficients.  Your call these $k$ coefficients $\beta$, and you also
+describe them using a vector representation:
+\begin{equation}
+  \beta = \left< \beta_1, \beta_2, \cdots, \beta_k \right>
+\end{equation}
+
+Call your final prediction $\hat{y}$.  The linear combination of 
+your $X$ predictor variables with $\beta$ coefficients is defined 
+in vector notation as:
+\begin{equation}
+  \hat{y} = X \beta
+\end{equation}
+Equivalently, you can write this using subscripts:
+\begin{equation}
+  \hat{y}_i = \sum_{j = 1}^{k}X_{ij}\cdot \beta_{j}
+\end{equation}
+
+Your estimate $\hat{y}$ might not be perfectly equal to $y$, so
+you should define some residual variable, $\epsilon$ to describe
+the difference:
+\begin{equation}
+  \label{eqn:residual_definition}
+  \epsilon_i = y_i - \sum_{j = 1}^{k}X_{ij}\cdot \beta_{j}
+\end{equation}
+
+This allows you to finally describe the true variable, $y$, in terms
+of your predictor variables:
+\begin{equation}
+  y_i = \sum_{j = 1}^{k}X_{ij}\cdot \beta_{j} + \epsilon_{i}
+\end{equation}
+Equivalently, in the vector representation:
+\begin{equation}
+  y = X\beta + \epsilon
+\end{equation}
+
+The goal of the regression is to pick some vector of coefficients $\beta$ (length $k$)
+such that the residuals of our prediction, $\epsilon$ (length $n$), are minimized.

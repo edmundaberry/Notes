@@ -1,0 +1,26 @@
+\section{Explained variance}
+\label{sec:explained_variance}
+
+We define the number of degrees of freedom, ndof, to be the difference
+between the number of entries in the dataset, $n$, and the number
+of discriminating variables, $k$:
+\begin{equation}
+  \text{ndof} = n - k
+\end{equation}
+Note that in classical linear regression $n$ must be greater than $k$, or
+else the dataset could be fit perfectly.
+With this in mind, we can define the residual standard deviation, $\hat{\sigma}$, 
+as follows:
+\begin{equation}
+  \hat{\sigma} = \sqrt{\sum_{i = 1}^{n}\frac{\epsilon_i^2}{\left(n - k\right)}}
+\end{equation}
+Here, $\hat{\sigma}$ summarizes the scale of the
+residuals.  You can think of this as a measure of the average distance that
+the linear model output falls from the true value.  
+
+If we call the true standard deviation of the data $s_{y}$, then we can define $R^2$ such that:
+\begin{equation}
+R^2 = 1- \frac{\hat{\sigma}^2}{s_{y}^{2}}
+\end{equation}
+
+

@@ -1,0 +1,112 @@
+\section{Useful series}
+\label{sec:useful_series}
+
+Series are frequently useful when evaluating expected values or variances
+of outcomes of Bernoulli experiments.  For example, say you have a fair coin
+($p(\text{heads}) = p = 0.5$).  How many times do you expect to have to flip
+your coin before ``heads'' comes up?
+
+The outcome of observing $N-1$ tails outcomes before finally seeing a heads
+outcome on toss $N$ has a well-defined probability, $P(N)$:
+
+\begin{equation}
+  P(N) = (1-p)^{N-1} p
+\end{equation}
+
+This means that the expected value of the number of coin flips is also well-defined:
+
+\begin{align}
+  \mathbb{E}[N] &= \sum_{n=1}^{\infty} n \cdot P(n) \\
+  \mathbb{E}[N] &= \sum_{n=1}^{\infty} n \cdot (1-p)^{n-1} p
+\end{align}
+
+Let's assume that the coin is fair, so that $p = (1-p) = 0.5$:
+
+\begin{align}
+  \mathbb{E}[N] &= \sum_{n=1}^{\infty} n \cdot p^{n}
+\end{align}
+
+We evaluate this series by trying to establish a recurrence relation:
+
+\begin{align}
+  p \cdot \mathbb{E}[N] &= \sum_{n=1}^{\infty} n \cdot p^{n + 1} \\ 
+  p \cdot \mathbb{E}[N] &= \sum_{n=2}^{\infty} (n-1) \cdot p^{n} \\ 
+   \mathbb{E}[N] - p \cdot \mathbb{E}[N] &= \left(\sum_{n=1}^{\infty} n \cdot p^{n}\right) -  \left(\sum_{n=2}^{\infty} (n-1) \cdot p^{n}\right) \\
+   \mathbb{E}[N] \cdot (1 - p) &= \left(p + \sum_{n=2}^{\infty} n \cdot p^{n}\right) -  \left(\sum_{n=2}^{\infty} (n-1) \cdot p^{n}\right) \\
+   \mathbb{E}[N] \cdot (1 - p) &= p + \sum_{n=2}^{\infty} p^{n} \\
+   \mathbb{E}[N] \cdot (1 - p) &= \sum_{n=1}^{\infty} p^{n}
+\end{align}
+
+This last series is simply an infinite geometric series with first term $a_{0} = p$, which we know to be $\frac{p}{1-p}$.
+
+\begin{align}
+   \mathbb{E}[N] \cdot (1 - p) &= \frac{p}{1-p} \\ 
+   \mathbb{E}[N] &= \frac{p}{(1-p)^2} 
+\end{align}
+
+To summarize:
+
+\begin{equation}
+  \label{eqn:series1}
+  \boxed{
+    \sum_{n=1}^{\infty} n \cdot p^{n} = \frac{p}{(1-p)^2}
+  }
+\end{equation}
+
+Now that we know the expected number of coin flips it will take for 
+use to observe a head, we might want to know the variance:
+
+\begin{equation}
+  \text{Var}[N] = \mathbb{E}[N^2] - \mathbb{E}[N]^2
+\end{equation}
+
+We already know $\mathbb{E}[N]^2 = \frac{p^2}{(1-p)^4}$, so we 
+just need to evaluate $\mathbb{E}[N^2]$.  As before, this is well-defined:
+
+\begin{equation}
+  \mathbb{E}[N^2] = \sum_{n=1}^{\infty} n^2 \cdot p^{n}
+\end{equation}
+
+We take a similar approach to the one we took last time.  Namely, we multiply
+both sides of the above equation by $p$ in an effort to establish a 
+recurrence relation.
+
+\begin{align}
+  p \cdot \mathbb{E}[N^2] &= \sum_{n=1}^{\infty} n^2 \cdot p^{n+1} \\
+  p \cdot \mathbb{E}[N^2] &= \sum_{n=2}^{\infty} (n-1)^2 \cdot p^{n}  \\
+  \mathbb{E}[N^2] - p \cdot \mathbb{E}[N^2] &= \left(\sum_{n=1}^{\infty} n^2 \cdot p^{n}\right) - \left(\sum_{n=2}^{\infty} (n-1)^2 \cdot p^{n}\right) \\ 
+  \mathbb{E}[N^2] \cdot (1 - p) &= \left(p + \sum_{n=2}^{\infty} n^2 \cdot p^{n}\right) - \left(\sum_{n=2}^{\infty} (n-1)^2 \cdot p^{n}\right) \\
+  \mathbb{E}[N^2] \cdot (1 - p) &= p + \sum_{n=2}^{\infty} \left(n^2 - (n-1)^2\right) \cdot p^{n} \\
+  \mathbb{E}[N^2] \cdot (1 - p) &= p + \sum_{n=2}^{\infty} \left(2n - 1\right) \cdot p^{n} \\
+  \mathbb{E}[N^2] \cdot (1 - p) &= p + 2\left(\sum_{n=2}^{\infty} n \cdot p^n\right) - \left(\sum_{n=2}^{\infty} p^{n}\right) 
+\end{align}
+
+We know how to evaluate the first series using Equation \ref{eqn:series1}, 
+and the second series is just an infinite geometric series that starts with $p^2$.
+
+\begin{align}
+  \mathbb{E}[N^2] \cdot (1 - p) &= p + 2\left(\frac{p}{(1-p)^2} - p\right) - \left(\frac{p^2}{1-p}\right) \\ 
+  \mathbb{E}[N^2] \cdot (1 - p) &= \frac{p\cdot\left(1-p\right)^2}{\left(1-p\right)^2} + 2\left(\frac{p}{(1-p)^2} - \frac{p\cdot\left(1-p\right)^2}{\left(1-p\right)^2}\right) - \left(\frac{p^2\cdot\left(1-p\right)}{\left(1-p\right)^2}\right) \\ 
+  \mathbb{E}[N^2] \cdot (1 - p) &= \frac{p\cdot\left(1-p\right)^2}{\left(1-p\right)^2} + 2\left(\frac{p}{(1-p)^2} - \frac{p\cdot\left(1-p\right)^2}{\left(1-p\right)^2}\right) - \left(\frac{p^2\cdot\left(1-p\right)}{\left(1-p\right)^2}\right) \\ 
+  \mathbb{E}[N^2] \cdot (1 - p) &= \frac{p\cdot(p+1)}{\left(1-p\right)^2} \\
+  \mathbb{E}[N^2] &= \frac{p\cdot(p+1)}{\left(1-p\right)^3} \\
+\end{align}
+
+
+To summarize:
+
+\begin{equation}
+  \label{eqn:series2}
+  \boxed{
+    \sum_{n=1}^{\infty} n^2 \cdot p^{n} = \frac{p\cdot(p+1)}{\left(1-p\right)^3}
+  }
+\end{equation}
+
+This allows us to evaluate the variance:
+
+\begin{align}
+  \text{Var}[N] &= \mathbb{E}[N^2] - \mathbb{E}[N]^2 \\ 
+  \text{Var}[N] &= \frac{p\cdot(p+1)}{\left(1-p\right)^3} - \frac{p^2}{(1-p)^4} \\
+  \text{Var}[N] &= \frac{p\cdot(p+1)\cdot(1-p)}{\left(1-p\right)^4} - \frac{p^2}{(1-p)^4} \\
+\end{align}
+

@@ -1,0 +1,60 @@
+\section{Introduction}
+\label{sec:intro}
+
+We begin by defining terms.
+
+A {\it stochastic process} is a collection of random variables 
+that represent the evolution of a system of random variables
+over time.  There are many kinds of stochastic process that are
+relevant to quantitative finance.  The two kinds that are 
+most likely to appear in a quantitative finance interview are
+{\it Markov processes} and {\it Martingale processes}.
+
+A Markov process satisfies the {\it Markov property}, namely, that
+given the present state of the process, all of the past states
+and all of the future states are independent.  Consider a discrete-time
+stochastic process, $X$, such that $X = (X_{t}, t \in T)$, where $T = \mathbb{N}$ is a 
+totally ordered set corresponding to time:
+\begin{equation}
+  \mathbb{P}(X_n = x_n | X_{n-1} = x_{n-1}, \ldots, X_0 = x_0) = \mathbb{P}(X_n = x_n | X_{n-1})
+\end{equation}
+This leads to the common observation that a Markov process is {\it memoryless}, 
+since the future of the process is completely independent of its past.
+
+A Martingale process satisfies the {\it Martingale property}, namely, that
+all future states of the process have a conditional
+expected value equal to the current state of the process.
+Consider, again, a discrete-time stochastic process, $Y$, 
+such that $Y = (Y_{t}, t \in T)$, where $T = \mathbb{N}$ is a 
+totally ordered set corresponding to time:
+\begin{equation}
+  \mathbb{E}(Y_{n+1}|Y_n, \ldots ,Y_0) = Y_n
+\end{equation}
+One should note that a Martingale process does not have to be a Markov
+process, and a Markov process does not have to be a Martingale process.
+The rest of this discussion will focus around  Martingale processes.
+
+In order to explain Martingales further, we will
+consider a classic problem known as {\it Gambler's Ruin} as an example.
+In this problem, a gambler begins with an initial fortune
+of $i$ dollars.  On each successive game, the gambler 
+either wins one dollar  with probability $p$ or loses one dollar
+with probability $1-p$.  The gambler continues to play
+game after game until he either accumulates $N$ dollars
+or loses all of his money.
+We identify some useful variables and terms below:
+\begin{itemize}
+  \item Label the games using $T$, where $T = \mathbb{N}$ is a totally ordered set.
+  \item Let the outcome of game $t \in T$ be the random variable $X_t$, such that $X_t$ has allowed values of $\pm 1$.
+  \item As stated above, $\mathbb{P}(X_t = 1) = p$ and $\mathbb{P}(X_t = -1) = 1-p$
+  \item We describe the gambler's fortune after $n$ games as the time-series $S_n = S_0 + \sum\limits_{t = 1}^{n}X_t$, where $S_0 = i$ is the gambler's initial fortune.
+\end{itemize}
+We will consider two forms of the Gambler's Ruin problem: one in which the game
+is {\it fair} ($p = 0.5$) and one in which the game is {\it unfair} ($p \neq 0.5$).
+
+The next sections will describe properties of Martingales in more detail.
+Section \ref{sec:stop} will introduce the concept of stopping times.
+Section \ref{sec:opt} will introduce the {\it optional stopping theorem}.
+Section \ref{sec:wald} will introduce Wald's first equality.
+Finally, Sections \ref{sec:fair} and \ref{sec:unfair} will apply these concepts
+and theorems to the Gambler's Ruin example described above.
